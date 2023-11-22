@@ -10,6 +10,8 @@
       git clone https://github.com/Wedlec129/mezuzah/tree/main
       cd src/
       pip install -r requirements.txt
+
+запустите mySQL и настройте пользователя для работы с БД.
   
 
 # 1) Настройка mySQL:
