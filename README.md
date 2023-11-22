@@ -42,7 +42,7 @@
       <img src="https://github.com/Wedlec129/mezuzah/blob/main/foto/5.png" width="726">
 </p>
 
-# 5) Итогавая таблица:
+# 5) Итоговая таблица:
 
 <p align="center">
       <img src="https://github.com/Wedlec129/mezuzah/blob/main/foto/6.png" width="726">
