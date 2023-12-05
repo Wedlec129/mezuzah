@@ -35,5 +35,10 @@ stop:
 	sudo systemctl stop mysql.service
 installMysql:
 	sudo apt install mysql-server
+# sudo mysql
+# -- for MySQL
+# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+# -- for MariaDB
+# ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');
 endif
 

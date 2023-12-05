@@ -55,7 +55,7 @@ class DatabaseConnector:
             self.cursor = self.connection.cursor()
             print("Подключено к базе данных")
         except mysql.connector.Error as err:
-            print("Ошибка подключения:", err)
+            print("Ошибка подключения 401:", err)
 
     # ф-я отключения от БД
     def disconnect(self):
@@ -78,7 +78,7 @@ class DatabaseConnector:
             self.connection.commit()
             return True
         except mysql.connector.Error as err:
-            print("Ошибка выполнения запроса:", err)
+            print("Ошибка выполнения запроса 402:", err)
             return False
     
 
@@ -93,7 +93,7 @@ class DatabaseConnector:
             result = self.cursor.fetchall()
             return result
         except mysql.connector.Error as err:
-            print("Ошибка выполнения запроса:", err)
+            print("Ошибка выполнения запроса 403:", err)
             return None
         
     # ф-я вставки данных в таблицу webpage
