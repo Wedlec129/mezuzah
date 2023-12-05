@@ -6,13 +6,16 @@
 # //    Кузьмин Данил ККСО-04-21
 
 
+# user="wedlec" 
+# password="root"
+
 # настройка mysql
 host="localhost" 
-user="wedlec" 
-password="root"
-database="mezuzah"      # база данных создаётся сама :)
+# пользователь для работы с БД (по умолчанию)
+user="root" 
+password=""
+database="mezuzah"        # DROP DATABASE mezuzah 
 #
-
 
 # библиотеки для работы с GUI
 import tkinter as tk
@@ -55,7 +58,7 @@ def search_articles():
 
     # работаем по указаному времени
     while time.time() - start_time < search_time:
-        # указываем поисковой запрос (и если надо то перематываем страницы поиска)
+        # указываем поисковой запрос (и если надо то перематываем страницы поиска(где начать))
         url = f"https://www.google.com/search?q={'+'.join(keywords.split())}&start={len(top_results)}"
         # указываем юзер агент
         headers = {'User-Agent': 'Mozilla/4.0'}
@@ -63,7 +66,7 @@ def search_articles():
         response = requests.get(url, headers=headers)
         time.sleep(1)  # Задержка между запросами по страницам
 
-        # если есть ответ ГУД 
+        # если есть ответ 'успешно' 
         if response.status_code == 200:
             # парсим ответ 
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -110,41 +113,41 @@ def perform_insert_results_to_db():
     threading.Thread(target=insert_results_to_db).start()   
 # отправка статей в БД
 def insert_results_to_db():
-    # Создаем объект класса DatabaseConnector
-    db_connector = DatabaseConnector(host=host, user=user, password=password, database=database)
-    # подключаемся к БД
-    db_connector.connect() 
 
+    try:
 
+        # Создаем объект класса DatabaseConnector
+        db_connector = DatabaseConnector(host=host, user=user, password=password, database=database)
+        # подключаемся к БД
+        db_connector.connect() 
 
-    # создание таблицы webpage (если она есть то ок)
-    create_table_query = "CREATE TABLE IF NOT EXISTS webpage (id INT AUTO_INCREMENT PRIMARY KEY, site VARCHAR(255), title VARCHAR(255),href VARCHAR(255) )"
-    # выполняем команду создания таб
-    db_connector.execute_query(create_table_query)
-    
-    
-    # Получаем все элементы из таблицы
-    items = tree.get_children()
-    for item in items:
-        values = tree.item(item, 'values')
-        id, domain, title, href = values
-        # отправляем значения
-        db_connector.insert_webpage(domain, title, href)
+        # создание таблицы webpage (если она есть то ок)
+        create_table_query = "CREATE TABLE IF NOT EXISTS webpage (id INT AUTO_INCREMENT PRIMARY KEY, site VARCHAR(255), title VARCHAR(255),href VARCHAR(255) )"
+        # выполняем команду создания таб
+        db_connector.execute_query(create_table_query)
+        
+        
+        # Получаем все элементы из таблицы
+        items = tree.get_children()
+        for item in items:
+            values = tree.item(item, 'values')
+            id, domain, title, href = values
+            # отправляем значения
+            db_connector.insert_webpage(domain, title, href)
 
-    messagebox.showinfo("Успешно", "добавлено в таблицу")
+        messagebox.showinfo("Успешно", "добавлено в таблицу")
 
-    # Выбираем и выводим в консоль данные из таблицы webPage
-    select_query = "SELECT * FROM webPage"
-    result = db_connector.fetch_all(select_query)
-    if result:
-        for row in result:
-            print(row)
+        # Выбираем и выводим в консоль данные из таблицы webPage
+        select_query = "SELECT * FROM webPage"
+        result = db_connector.fetch_all(select_query)
+        if result:
+            for row in result:
+                print(row)
 
-    # Закрываем соединение с базой данных
-    db_connector.disconnect()
-
-
-
+        # Закрываем соединение с базой данных
+        db_connector.disconnect()
+    except:
+         messagebox.showinfo("Ошибка", "Ошибка в подключении к БД mysql.\n Включите mysql!")
 
 #  UI создание кнопок действия
 def create_search_interface(root):

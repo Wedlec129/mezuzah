@@ -21,7 +21,7 @@ class DatabaseConnector:
         self.connection = None
         self.cursor = None
 
-        # создаём бд (если БД есть то ничего сташного ;) )
+        # создаём бд 
         try:
             #  Устанавливаем соединение с MySQL
             connection = mysql.connector.connect(
@@ -37,22 +37,9 @@ class DatabaseConnector:
             # Закрываем соединение с MySQL
             cursor.close()
             connection.close()
-        except:
-            print(f"Произошла ошибка при создании базы данных: {e}")
-
-        finally:
-            try:
-
-                # подключаемся к БД
-                db_connector = DatabaseConnector(host=self.host, user=self.user, password=self.password)
-                db_connector.connect()
-
-                create_database_query = f"CREATE DATABASE IF NOT EXISTS {self.database}"
-                db_connector.execute_query(create_database_query)
-
-                db_connector.disconnect()
-            except Exception as e:
-                print(f"Произошла ошибка при создании базы данных: {e}")
+        except mysql.connector.Error as err:
+            print(f"Произошла ошибка при создании базы данных: {err}")
+            print(f"Проверьте включен ли mysql")
         
 
     # ф-я подключения к БД
@@ -77,7 +64,7 @@ class DatabaseConnector:
             self.connection.close()
             print("Отключено от базы данных")
 
-    # Функция execute_query в классе для работы с базой данных выполняет переданный SQL-запрос. 
+    # Функция execute_query выполняет переданный SQL-запрос. 
     # Она используется для операций которые изменяют данные в базе данных
     # таких как создание таблицы (`CREATE TABLE`), вставка новых записей (`INSERT INTO`), 
     # обновление или удаление записей (`UPDATE`, DELETE`). 
@@ -97,9 +84,9 @@ class DatabaseConnector:
 
     # Функция fetch_all используется для выборки данных из базы данных. 
     # Она выполняет SQL-запрос и получает все строки, соответствующие запросу. 
-    # Возвращает результат выборки в виде списка кортежей, где каждый кортеж представляет 
+    # Возвращает результат выборки в виде списка кортежей!, где каждый кортеж представляет 
     # собой строку данных из результата запроса. Эти данные могут быть обработаны или 
-    # выведены в консоль, как показано в примере.
+    # выведены в консоль
     def fetch_all(self, query):
         try:
             self.cursor.execute(query)
@@ -111,7 +98,6 @@ class DatabaseConnector:
         
     # ф-я вставки данных в таблицу webpage
     def insert_webpage(self, site, title, href):
-
         #вставка данных в таблицу webpage
         insert_query = "INSERT INTO webpage (site, title, href) VALUES (%s, %s, %s)"
         insert_params = (site, title, href)
