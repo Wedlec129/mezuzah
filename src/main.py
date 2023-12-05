@@ -6,15 +6,13 @@
 # //    Кузьмин Данил ККСО-04-21
 
 
-# user="wedlec" 
-# password="root"
-
 # настройка mysql
 host="localhost" 
 # пользователь для работы с БД (по умолчанию)
 user="root" 
 password=""
 database="mezuzah"        # DROP DATABASE mezuzah 
+taible="webpage"        
 #
 
 # библиотеки для работы с GUI
@@ -122,7 +120,7 @@ def insert_results_to_db():
         db_connector.connect() 
 
         # создание таблицы webpage (если она есть то ок)
-        create_table_query = "CREATE TABLE IF NOT EXISTS webpage (id INT AUTO_INCREMENT PRIMARY KEY, site VARCHAR(255), title VARCHAR(255),href VARCHAR(255) )"
+        create_table_query = f"CREATE TABLE IF NOT EXISTS {taible} (id INT AUTO_INCREMENT PRIMARY KEY, site VARCHAR(400), title VARCHAR(400),href VARCHAR(400) )"
         # выполняем команду создания таб
         db_connector.execute_query(create_table_query)
         
@@ -137,8 +135,8 @@ def insert_results_to_db():
 
         messagebox.showinfo("Успешно", "добавлено в таблицу")
 
-        # Выбираем и выводим в консоль данные из таблицы webPage
-        select_query = "SELECT * FROM webPage"
+        # Выбираем и выводим в консоль данные из таблицы webpage
+        select_query = f"SELECT * FROM {taible}"
         result = db_connector.fetch_all(select_query)
         if result:
             for row in result:
