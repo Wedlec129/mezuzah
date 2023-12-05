@@ -11,7 +11,7 @@ host="localhost"
 # пользователь для работы с БД (по умолчанию)
 user="root" 
 password=""
-database="mezuzah"        # DROP DATABASE mezuzah 
+database="mezuzah"        
 taible="webpage"        
 #
 

@@ -35,10 +35,21 @@ stop:
 	sudo systemctl stop mysql.service
 installMysql:
 	sudo apt install mysql-server
-# sudo mysql
-# -- for MySQL
-# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
-# -- for MariaDB
-# ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');
+	conficMysql
+
+conficMysql:
+	sudo mysql
+# в linux mysql нужно явно указать пароль для root
+# mysql
+	ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');
+# mariadb
+	ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');
+#1) sudo mysql
+# 
+# 2) use mezuzah
+# 
+# 3)SELECT * FROM `webpage` WHERE 1;
+# 
+# DROP DATABASE mezuzah 
 endif
 
