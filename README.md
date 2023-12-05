@@ -8,10 +8,13 @@
 
 # 0) Установка зависимостей:
       git clone https://github.com/Wedlec129/mezuzah/tree/main
-      cd mezuzah/src/
-      pip install -r requirements.txt
-
-запустите mySQL и настройте пользователя для работы с БД.
+      cd mezuzah/
+      make 
+      
+# 1) Настройка приложения:
+<p align="center">
+      <img src="https://github.com/Wedlec129/mezuzah/blob/main/foto/0.png" width="726">
+</p>          
   
 
 # 1) Настройка mySQL:
