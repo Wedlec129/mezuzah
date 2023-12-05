@@ -10,6 +10,7 @@ help:
 	@echo "make stop - остановка БД" 
 	@echo "make installPyReq - установка зависимостей для python3" 
 	@echo "make installMysql - установка mysql" 
+	@echo "make conficMysql - установка конфига для mysql (только linux)" 
 
 # установка зависимостей
 installPyReq:
