@@ -6,12 +6,12 @@
 
 
 
-# 0) Установка зависимостей:
+#  Установка приложения:
       git clone https://github.com/Wedlec129/mezuzah/tree/main
       cd mezuzah/
       make 
       
-# 1) Настройка приложения:
+# 0) Настройка приложения:
 <p align="center">
       <img src="https://github.com/Wedlec129/mezuzah/blob/main/foto/0.png" width="726">
 </p>          
