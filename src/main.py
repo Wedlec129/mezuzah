@@ -8,9 +8,10 @@
 
 # настройка mysql
 host="localhost" 
+port=3306 
 # пользователь для работы с БД (по умолчанию)
 user="root" 
-password=""
+password="" 
 database="mezuzah"        
 taible="webpage"        
 #
@@ -115,7 +116,7 @@ def insert_results_to_db():
     try:
 
         # Создаем объект класса DatabaseConnector
-        db_connector = DatabaseConnector(host=host, user=user, password=password, database=database)
+        db_connector = DatabaseConnector(host=host, port=port, user=user, password=password, database=database)
         # подключаемся к БД
         db_connector.connect() 
 

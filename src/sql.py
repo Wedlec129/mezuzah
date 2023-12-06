@@ -13,8 +13,9 @@ import mysql.connector
 # создаём класс для удбной работы с БД
 class DatabaseConnector:
     # конструктор (инициализация переменных и создание БД)
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, port, user, password, database):
         self.host = host
+        self.port = port
         self.user = user
         self.password = password
         self.database = database
@@ -24,22 +25,26 @@ class DatabaseConnector:
         # создаём бд 
         try:
             #  Устанавливаем соединение с MySQL
-            connection = mysql.connector.connect(
+            self.connection = mysql.connector.connect(
             host=self.host,
+            port=self.port,
             user=self.user,
             password=self.password)
                             
             # Создаем объект cursor для выполнения SQL-запросов
-            cursor = connection.cursor()
+            self.cursor = self.connection.cursor()
             # Создаем базу данных 'mezuzah', если она еще не существует
             cretDB = f"CREATE DATABASE IF NOT EXISTS {self.database}"
-            cursor.execute(cretDB)
+            self.cursor.execute(cretDB)
             # Закрываем соединение с MySQL
-            cursor.close()
-            connection.close()
+            self.cursor.close()
+            self.connection.close()
         except mysql.connector.Error as err:
             print(f"Произошла ошибка при создании базы данных: {err}")
             print(f"Проверьте включен ли mysql")
+
+
+
         
 
     # ф-я подключения к БД
@@ -48,6 +53,7 @@ class DatabaseConnector:
             
             self.connection = mysql.connector.connect(
                 host=self.host,
+                port=self.port,
                 user=self.user,
                 password=self.password,
                 database=self.database
@@ -102,4 +108,4 @@ class DatabaseConnector:
         insert_query = "INSERT INTO webpage (site, title, href) VALUES (%s, %s, %s)"
         insert_params = (site, title, href)
         return self.execute_query(insert_query, insert_params)
-    
+  
