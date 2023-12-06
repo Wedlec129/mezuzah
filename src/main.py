@@ -113,40 +113,50 @@ def perform_insert_results_to_db():
 # отправка статей в БД
 def insert_results_to_db():
 
-    try:
+   
 
-        # Создаем объект класса DatabaseConnector
-        db_connector = DatabaseConnector(host=host, port=port, user=user, password=password, database=database)
-        # подключаемся к БД
-        db_connector.connect() 
-
-        # создание таблицы webpage (если она есть то ок)
-        create_table_query = f"CREATE TABLE IF NOT EXISTS {taible} (id INT AUTO_INCREMENT PRIMARY KEY, site VARCHAR(400), title VARCHAR(400),href VARCHAR(400) )"
-        # выполняем команду создания таб
-        db_connector.execute_query(create_table_query)
-        
-        
-        # Получаем все элементы из таблицы
+         # Получаем все элементы из таблицы
         items = tree.get_children()
-        for item in items:
-            values = tree.item(item, 'values')
-            id, domain, title, href = values
-            # отправляем значения
-            db_connector.insert_webpage(domain, title, href)
 
-        messagebox.showinfo("Успешно", "добавлено в таблицу")
+        if len(items) !=0 :
+        
+            try:
+                # Создаем объект класса DatabaseConnector
+                db_connector = DatabaseConnector(host=host, port=port, user=user, password=password, database=database)
+                # подключаемся к БД
+                db_connector.connect() 
 
-        # Выбираем и выводим в консоль данные из таблицы webpage
-        select_query = f"SELECT * FROM {taible}"
-        result = db_connector.fetch_all(select_query)
-        if result:
-            for row in result:
-                print(row)
+                # создание таблицы webpage (если она есть то ок)
+                create_table_query = f"CREATE TABLE IF NOT EXISTS {taible} (id INT AUTO_INCREMENT PRIMARY KEY, site VARCHAR(400), title VARCHAR(400),href VARCHAR(400) )"
+                # выполняем команду создания таб
+                db_connector.execute_query(create_table_query)
+                
+                
+            
 
-        # Закрываем соединение с базой данных
-        db_connector.disconnect()
-    except:
-         messagebox.showinfo("Ошибка", "Ошибка в подключении к БД mysql.\n Включите mysql!")
+                for item in items:
+                    values = tree.item(item, 'values')
+                    id, domain, title, href = values
+                    # отправляем значения
+                    db_connector.insert_webpage(domain, title, href)
+
+                messagebox.showinfo("Успешно", "добавлено в таблицу")
+
+                # Выбираем и выводим в консоль данные из таблицы webpage
+                select_query = f"SELECT * FROM {taible}"
+                result = db_connector.fetch_all(select_query)
+                if result:
+                    for row in result:
+                        print(row)
+
+                # Закрываем соединение с базой данных
+                db_connector.disconnect()
+            except:
+                messagebox.showinfo("Ошибка", "Ошибка в подключении к БД mysql.\n Включите mysql!")
+
+        else:
+            messagebox.showinfo("Обшибка", "Совершите поиск!")
+
 
 #  UI создание кнопок действия
 def create_search_interface(root):
