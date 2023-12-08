@@ -40,18 +40,13 @@ stopDB:
 installMysql:
 	sudo apt install mysql-server
 	conficMysql
-
 conficMysql:
+	@echo "введите команду:'ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');' " 
 	sudo mysql
 # в linux mysql нужно явно указать пароль для root
-# mariadb
-	ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');
-#1) sudo mysql
-# 
+# 1) sudo mysql
 # 2) use mezuzah
-# 
 # 3)SELECT * FROM `webpage` WHERE 1;
-# 
 # DROP DATABASE mezuzah 
 endif
 
