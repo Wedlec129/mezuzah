@@ -50,7 +50,6 @@ class DatabaseConnector:
     # ф-я подключения к БД
     def connect(self):
         try:
-            
             self.connection = mysql.connector.connect(
                 host=self.host,
                 port=self.port,

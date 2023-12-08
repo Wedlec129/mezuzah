@@ -1,5 +1,5 @@
 
-# где установлен питон и какая ос
+# переменные которые указывают где установлен python3 и какая ос
 PYTHON:=$(shell which python3) 
 OS := $(shell uname)
 
@@ -13,10 +13,8 @@ help:
 	@echo "make installPyReq - установка зависимостей для python3" 
 	@echo "make installMysql - установка mysql" 
 	@echo "make conficMysql - установка конфига для mysql (только linux)" 
-
 run: 
 	@$(PYTHON) src/main.py
-
 # установка зависимостей
 installPyReq:
 	pip3 install -r src/requirements.txt

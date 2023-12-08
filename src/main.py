@@ -67,6 +67,7 @@ def search_articles():
 
         # если есть ответ 'успешно' 
         if response.status_code == 200:
+            
             # парсим ответ 
             soup = BeautifulSoup(response.text, 'html.parser')
             links = soup.find_all('a')  # Получаем все ссылки на странице
